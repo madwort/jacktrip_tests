@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while getopts ":a:p:n:d:c:s:" opt; do
+while getopts ":a:p:n:d:c:s:m:" opt; do
   case $opt in
     a) a=$OPTARG; echo "IP a: $OPTARG" >&2
     ;;
@@ -26,7 +26,7 @@ if test "$p" -eq 128; then
     qArray=(4 8 12 16 20 24)
 fi
 
-if test "$p" -eq 64; then
+if test "$p" -le 64; then
     unset qArray
     qArray=(4 12 20 28 36 44)
 fi
