@@ -18,7 +18,7 @@ jackd -d dummy -p [PERIOD]
 
 # run the script (needs sudo to start iptraf-ng)
 
-sudo bash _loopback_recording.sh -a [IP ADDRESS] -d [DRIVER] -p [PERIOD] -n [CHANNELS] -c [INTERNET CONNECTION] -s [SERVER -q VALUE]
+sudo bash _loopback_recording.sh -a [IP ADDRESS] -d [DRIVER] -p [PERIOD] -n [CHANNELS] -c [INTERNET CONNECTION] -s [SERVER QUEUE VALUE] -m [SERVER MODE]
 
 -a : server ip address
 -d : uses jackd dummy driver if set to "dummy" else uses alsa with default audio driver
@@ -26,5 +26,6 @@ sudo bash _loopback_recording.sh -a [IP ADDRESS] -d [DRIVER] -p [PERIOD] -n [CHA
 -n : number of channels
 -c : type of internet connection (just for reference)
 -s : value of -q on the server jacktrip instance (just for reference)
+-m : the server mode, set to "hub" if in Hub mode [-S] otherwise defaults to peer [-s]
 
 # output folder will contain audio recordings and test measurements

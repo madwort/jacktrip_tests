@@ -4,15 +4,17 @@ while getopts ":a:p:n:d:c:s:m:" opt; do
   case $opt in
     a) a=$OPTARG; echo "IP a: $OPTARG" >&2
     ;;
-    p) p=$OPTARG; echo "Frame rate: $OPTARG" >&2
+    p) p=$OPTARG; echo "Period rate: $OPTARG" >&2
     ;;
     n) n=$OPTARG; echo "No. of channels: $OPTARG" >&2
     ;;
-    d) d=$OPTARG; echo "Device: $OPTARG" >&2
+    d) d=$OPTARG; echo "Driver: $OPTARG" >&2
     ;;
     c) c=$OPTARG; echo "Connection type: $OPTARG" >&2
     ;;
     s) s=$OPTARG; echo "Server -queue setting: $OPTARG" >&2
+    ;;
+    m) m=$OPTARG; echo "Server mode: $OPTARG" >&2
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
@@ -50,7 +52,15 @@ sleep 1
 
 for q in "${qArray[@]}"
 do
-    jacktrip -C ${a} -n${n} -q${q} -z &
+    if test "$m" == "hub"
+    then
+        printf "jacktrip in Hub mode"
+        jacktrip -C ${a} -n${n} -q${q} -z &
+    else
+        printf "jacktrip in peer mode"
+        jacktrip -c ${a} -n${n} -q${q} -z &
+    fi
+
     sleep 2
     sudo iptraf-ng -B -L ./_${d}_${p}_q${q}_n${n}_${c}_server_q${s}_logs.txt -d eth0 &
     jack_connect mpg123:1 ${a}:send_1
