@@ -79,7 +79,7 @@ done
 jack_connect mpg123:1 system:playback_1
 jack_capture -d 10 --port system:playback_1 _system_comparison_${p}.wav
 
-sudo killall mpg123.bin
+sudo pkill -INT mpg123
 sudo killall jacktrip
 sudo killall jackd
 mkdir _server_p${p}_q${s}

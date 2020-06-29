@@ -9,12 +9,19 @@ sudo apt install jack-delay
 sudo apt install jack-capture
 sudo apt install iptraf-ng
 
-# start the server
+# SERVER / PEER
+# start jackd and jacktrip on your server machine / peer acting as server
 
+***hub mode***
 jacktrip -S -n [CHANNELS] -z -p 1 -q [SERVER -q VALUE]
 jackd -d dummy -p [PERIOD]
 
-# place a test.mp3 file in the script folder
+***peer mode***
+jacktrip -S -n [CHANNELS] -z -p 1 -q [SERVER -q VALUE]
+jackd -d dummy -p [PERIOD]
+
+# CLIENT
+# now on the client place a test.mp3 file in the script folder
 
 # run the script (needs sudo to start iptraf-ng)
 
