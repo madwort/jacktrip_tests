@@ -1,30 +1,30 @@
 # Loopback Recording
 
+This script will open a series of jacktrip connections to the designated loopback server at different -q values, make audio recordings of the return signal and take latency and network measurements.
 
 # dependencies
-
 
 sudo apt install mpg123
 sudo apt install jack-delay
 sudo apt install jack-capture
+sudo apt install iptraf-ng
 
+# start the server
 
-# move executable file and your own test mp3 to RPi home folder
+jacktrip -S -n [CHANNELS] -z -p 1 -q [SERVER -q VALUE]
+jackd -d dummy -p [PERIOD]
 
+# place a test.mp3 file in the script folder
 
-scp _loopback_recording.sh pi@raspberry-jam.local:~/
-scp test.mp3 pi@raspberry-jam.local:~/
+# run the script (needs sudo to start iptraf-ng)
 
+sudo bash _loopback_recording.sh -a [IP ADDRESS] -d [DRIVER] -p [PERIOD] -n [CHANNELS] -c [INTERNET CONNECTION] -s [SERVER -q VALUE]
 
-# set the server to desired test settings
-# -p = frames per second, -n = channels, -d = audio device ref, -c = internet connection ref, -s = server queue ref
-# on the RPi in ~/ run
+-a : server ip address
+-d : uses jackd dummy driver if set to "dummy" else uses alsa with default audio driver
+-p : number of frames between JACK process() calls, must be the same between server and client
+-n : number of channels
+-c : type of internet connection (just for reference)
+-s : value of -q on the server jacktrip instance (just for reference)
 
-
-bash _loopback_recording.sh -a 10.0.0.4 -p 256 -n 1 -d dummy -c adsl -s 4
-
-
-# from your laptop, copy recorded the output folder off the RPi
-
-
-scp -r pi@raspberry-jam.local:~/[_NAME_OF_FOLDER] ~/
+# output folder will contain audio recordings and test measurements
